@@ -25,6 +25,9 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
         <span className={styles.specialty}>
           {doctor.specialty}
         </span>
+        <span className={styles.availability}>
+          {doctor.availability}
+        </span>
 
         <h3>{doctor.name}</h3>
 
