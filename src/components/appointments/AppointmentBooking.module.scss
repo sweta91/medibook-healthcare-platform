@@ -1,0 +1,353 @@
+.bookingSection {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.sectionHeading {
+  margin-bottom: 24px;
+  padding:0 10px;
+
+  h2 {
+    margin: 6px 0;
+    color: #123b5d;
+    font-size: 28px;
+  }
+
+  p {
+    margin: 0;
+    color: #718096;
+    font-size: 14px;
+  }
+}
+
+.eyebrow {
+  color: #16a6a1;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.bookingLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 24px;
+  align-items: start;
+}
+
+.calendarCard,
+.summaryCard {
+  padding: 24px;
+  background: #fff;
+  border: 1px solid #e5edf2;
+  border-radius: 18px;
+}
+
+.calendarCard {
+  h3,
+  .slotHeading h3 {
+    margin: 0;
+    color: #123b5d;
+    font-size: 17px;
+  }
+}
+
+.dateGrid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.dateButton {
+  display: flex;
+  min-height: 94px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 10px 4px;
+  border: 1px solid #e5edf2;
+  border-radius: 12px;
+  background: #fff;
+  color: #718096;
+  cursor: pointer;
+  transition: 0.2s ease;
+
+  strong {
+    color: #123b5d;
+    font-size: 23px;
+  }
+
+  span {
+    font-size: 12px;
+  }
+
+  &:hover {
+    border-color: #16a6a1;
+  }
+}
+
+.activeDate {
+  border-color: #16a6a1;
+  background: #eaf5f6;
+
+  strong,
+  span {
+    color: #078f8b;
+  }
+}
+
+.divider,
+.summaryDivider {
+  height: 1px;
+  margin: 24px 0;
+  background: #e5edf2;
+}
+
+.slotHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  p {
+    margin: 6px 0 0;
+    color: #718096;
+    font-size: 12px;
+  }
+}
+
+.timeZone {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #078f8b;
+  font-size: 12px;
+}
+
+.timeZone span,
+.availableDot,
+.unavailableDot,
+.selectedDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.timeZone span,
+.availableDot {
+  background: #16a6a1;
+}
+
+.slotGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.timeSlot {
+  min-height: 44px;
+  padding: 8px;
+  border: 1px solid #dce8ed;
+  border-radius: 9px;
+  background: #fff;
+  color: #123b5d;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+
+  &:hover:not(:disabled) {
+    border-color: #16a6a1;
+    background: #eaf5f6;
+  }
+
+  &:disabled {
+    border-color: #edf0f2;
+    background: #f5f7f9;
+    color: #b5bec7;
+    cursor: not-allowed;
+    text-decoration: line-through;
+  }
+}
+
+.activeSlot {
+  border-color: #16a6a1;
+  background: #16a6a1;
+  color: #fff;
+
+  &:hover:not(:disabled) {
+    background: #078f8b;
+    color: #fff;
+  }
+}
+
+.slotLegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 22px;
+
+  span {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: #718096;
+    font-size: 11px;
+  }
+}
+
+.unavailableDot {
+  background: #cbd5df;
+}
+
+.selectedDot {
+  background: #16a6a1;
+}
+
+.summaryCard {
+  h3 {
+    margin: 0 0 22px;
+    color: #123b5d;
+    font-size: 18px;
+  }
+}
+
+.summaryDoctor {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+
+  strong,
+  span {
+    display: block;
+  }
+
+  strong {
+    color: #123b5d;
+    font-size: 13px;
+  }
+
+  div span {
+    margin-top: 4px;
+    color: #718096;
+    font-size: 11px;
+  }
+}
+
+.doctorIcon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 12px;
+  background: #eaf5f6;
+  color: #16a6a1;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.summaryRow,
+.feeRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+
+  span {
+    color: #718096;
+    font-size: 12px;
+  }
+
+  strong {
+    color: #123b5d;
+    font-size: 12px;
+    text-align: right;
+  }
+}
+
+.feeRow {
+  align-items: center;
+
+  strong {
+    font-size: 22px;
+  }
+}
+
+.continueButton {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 10px;
+  border: 0;
+  border-radius: 9px;
+  background: #16a6a1;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background: #078f8b;
+  }
+
+  &:disabled {
+    background: #b8d9d8;
+    cursor: not-allowed;
+  }
+}
+
+.summaryNote {
+  margin: 14px 0 0;
+  color: #8a98a8;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .bookingLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .summaryCard {
+    max-width: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .calendarCard,
+  .summaryCard {
+    padding: 18px;
+  }
+
+  .sectionHeading h2 {
+    font-size: 23px;
+  }
+
+  .dateGrid {
+    gap: 5px;
+  }
+
+  .dateButton {
+    min-height: 78px;
+
+    strong {
+      font-size: 19px;
+    }
+
+    span {
+      font-size: 10px;
+    }
+  }
+
+  .slotGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .slotHeading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

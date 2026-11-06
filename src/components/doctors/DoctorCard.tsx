@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { Doctor } from "@/types/doctor";
 import styles from "./DoctorCard.module.scss";
+import Link from "next/link";
 
 interface DoctorCardProps {
   doctor: Doctor;
@@ -46,7 +47,12 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
             <p>Consultation fee</p>
           </div>
 
-          <button type="button">Book Now</button>
+          <Link
+              href={`/doctors/${doctor.id}`}
+              className={styles.bookButton}
+            >
+              View Profile
+            </Link>
         </div>
       </div>
     </article>
