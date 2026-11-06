@@ -1,38 +1,94 @@
+
 "use client";
 
-import { useMemo, useState } from "react";
-import Link from "next/link";
+import { Suspense, useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import DoctorCard from "@/components/doctors/DoctorCard";
 import { doctors } from "@/data/doctors";
 import styles from "./page.module.scss";
 
 type SortOption = "rating" | "experience" | "fee-low" | "fee-high";
 
-export default function DoctorsPage() {
-  const [search, setSearch] = useState("");
-  const [specialty, setSpecialty] = useState("All Specialties");
-  const [sortBy, setSortBy] = useState<SortOption>("rating");
+const specialties = Array.from(
+  new Set(doctors.map((doctor) => doctor.specialty))
+);
 
-  const specialties = [
-    "All Specialties",
-    ...Array.from(new Set(doctors.map((doctor) => doctor.specialty))),
-  ];
+const aliases: Record<string, string[]> = {
+  cardiology: ["cardiologist"],
+  "dental care": ["dentist"],
+};
+
+function DoctorsContent() {
+  const searchParams = useSearchParams();
+
+  const [search, setSearch] = useState("");
+  const [selectedSpecialties, setSelectedSpecialties] = useState<string[]>([]);
+  const [minFee, setMinFee] = useState("");
+  const [maxFee, setMaxFee] = useState("");
+  const [minRating, setMinRating] = useState("0");
+  const [experience, setExperience] = useState("all");
+  const [availability, setAvailability] = useState("all");
+  const [sortBy, setSortBy] = useState<SortOption>("rating");
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+
+  // Read homepage search query from URL.
+  useEffect(() => {
+    setSearch(searchParams.get("search") ?? "");
+  }, [searchParams]);
 
   const filteredDoctors = useMemo(() => {
     const term = search.trim().toLowerCase();
+    const searchAliases = aliases[term] ?? [];
 
     return doctors
       .filter((doctor) => {
+        const searchableText = [
+          doctor.name,
+          doctor.specialty,
+          doctor.qualification,
+        ].join(" ").toLowerCase();
+
         const matchesSearch =
-          doctor.name.toLowerCase().includes(term) ||
-          doctor.specialty.toLowerCase().includes(term) ||
-          doctor.qualification.toLowerCase().includes(term);
+          !term ||
+          searchableText.includes(term) ||
+          searchAliases.some((alias) => searchableText.includes(alias));
 
         const matchesSpecialty =
-          specialty === "All Specialties" ||
-          doctor.specialty === specialty;
+          selectedSpecialties.length === 0 ||
+          selectedSpecialties.includes(doctor.specialty);
 
-        return matchesSearch && matchesSpecialty;
+        const matchesMinFee =
+          minFee === "" || doctor.consultationFee >= Number(minFee);
+
+        const matchesMaxFee =
+          maxFee === "" || doctor.consultationFee <= Number(maxFee);
+
+        const matchesRating = doctor.rating >= Number(minRating);
+
+        const matchesExperience =
+          experience === "all" ||
+          (experience === "0-5" && doctor.experience <= 5) ||
+          (experience === "5-10" &&
+            doctor.experience > 5 &&
+            doctor.experience <= 10) ||
+          (experience === "10+" && doctor.experience > 10);
+
+        const matchesAvailability =
+          availability === "all" ||
+          (availability === "today" &&
+            doctor.availability.toLowerCase().includes("today")) ||
+          (availability === "tomorrow" &&
+            doctor.availability.toLowerCase().includes("tomorrow"));
+
+        return (
+          matchesSearch &&
+          matchesSpecialty &&
+          matchesMinFee &&
+          matchesMaxFee &&
+          matchesRating &&
+          matchesExperience &&
+          matchesAvailability
+        );
       })
       .sort((a, b) => {
         switch (sortBy) {
@@ -48,18 +104,46 @@ export default function DoctorsPage() {
             return 0;
         }
       });
-  }, [search, specialty, sortBy]);
+  }, [
+    search,
+    selectedSpecialties,
+    minFee,
+    maxFee,
+    minRating,
+    experience,
+    availability,
+    sortBy,
+  ]);
+
+  const toggleSpecialty = (item: string) => {
+    setSelectedSpecialties((previous) =>
+      previous.includes(item)
+        ? previous.filter((value) => value !== item)
+        : [...previous, item]
+    );
+  };
 
   const clearFilters = () => {
     setSearch("");
-    setSpecialty("All Specialties");
+    setSelectedSpecialties([]);
+    setMinFee("");
+    setMaxFee("");
+    setMinRating("0");
+    setExperience("all");
+    setAvailability("all");
     setSortBy("rating");
   };
 
+  const activeFilterCount =
+    selectedSpecialties.length +
+    Number(minFee !== "") +
+    Number(maxFee !== "") +
+    Number(minRating !== "0") +
+    Number(experience !== "all") +
+    Number(availability !== "all");
+
   return (
     <main className={styles.page}>
-     {/* <header/> */}
-
       <section className={styles.hero}>
         <span className={styles.eyebrow}>FIND YOUR SPECIALIST</span>
         <h1>Find the right doctor for your health</h1>
@@ -97,10 +181,25 @@ export default function DoctorsPage() {
               <option value="fee-high">Fee: High to Low</option>
             </select>
           </div>
+
+          <button
+            type="button"
+            className={styles.mobileFilterButton}
+            onClick={() => setMobileFiltersOpen((previous) => !previous)}
+            aria-expanded={mobileFiltersOpen}
+            aria-controls="doctor-filters"
+          >
+            Filters ({activeFilterCount})
+          </button>
         </div>
 
         <div className={styles.layout}>
-          <aside className={styles.filters}>
+          <aside
+            id="doctor-filters"
+            className={`${styles.filters} ${
+              mobileFiltersOpen ? styles.filtersOpen : ""
+            }`}
+          >
             <div className={styles.filterHeading}>
               <h2>Filters</h2>
               <button type="button" onClick={clearFilters}>
@@ -114,23 +213,99 @@ export default function DoctorsPage() {
               {specialties.map((item) => (
                 <label className={styles.filterOption} key={item}>
                   <input
-                    type="radio"
-                    name="specialty"
-                    value={item}
-                    checked={specialty === item}
-                    onChange={() => setSpecialty(item)}
+                    type="checkbox"
+                    checked={selectedSpecialties.includes(item)}
+                    onChange={() => toggleSpecialty(item)}
                   />
                   <span>{item}</span>
                 </label>
               ))}
             </div>
+
+            <div className={styles.filterGroup}>
+              <h3>Consultation Fee</h3>
+
+              <div className={styles.feeInputs}>
+                <label>
+                  <span>Min (₹)</span>
+                  <input
+                    type="number"
+                    min="0"
+                    placeholder="500"
+                    value={minFee}
+                    onChange={(event) => setMinFee(event.target.value)}
+                  />
+                </label>
+
+                <label>
+                  <span>Max (₹)</span>
+                  <input
+                    type="number"
+                    min="0"
+                    placeholder="1500"
+                    value={maxFee}
+                    onChange={(event) => setMaxFee(event.target.value)}
+                  />
+                </label>
+              </div>
+            </div>
+
+            <div className={styles.filterGroup}>
+              <h3>Minimum Rating</h3>
+              <select
+                className={styles.filterSelect}
+                value={minRating}
+                onChange={(event) => setMinRating(event.target.value)}
+              >
+                <option value="0">All Ratings</option>
+                <option value="3.5">3.5+ Stars</option>
+                <option value="4">4.0+ Stars</option>
+                <option value="4.5">4.5+ Stars</option>
+                <option value="4.8">4.8+ Stars</option>
+              </select>
+            </div>
+
+            <div className={styles.filterGroup}>
+              <h3>Experience</h3>
+              <select
+                className={styles.filterSelect}
+                value={experience}
+                onChange={(event) => setExperience(event.target.value)}
+              >
+                <option value="all">Any Experience</option>
+                <option value="0-5">0–5 Years</option>
+                <option value="5-10">5–10 Years</option>
+                <option value="10+">10+ Years</option>
+              </select>
+            </div>
+
+            <div className={styles.filterGroup}>
+              <h3>Availability</h3>
+              <select
+                className={styles.filterSelect}
+                value={availability}
+                onChange={(event) => setAvailability(event.target.value)}
+              >
+                <option value="all">Any Availability</option>
+                <option value="today">Available Today</option>
+                <option value="tomorrow">Available Tomorrow</option>
+              </select>
+            </div>
+
+            <button
+              type="button"
+              className={styles.mobileApplyButton}
+              onClick={() => setMobileFiltersOpen(false)}
+            >
+              Show {filteredDoctors.length} Doctors
+            </button>
           </aside>
 
           <div className={styles.results}>
             <div className={styles.resultsHeading}>
               <div>
                 <h2>Available Doctors</h2>
-                <p>
+                <p aria-live="polite">
                   Showing {filteredDoctors.length} of {doctors.length} doctors
                 </p>
               </div>
@@ -146,7 +321,7 @@ export default function DoctorsPage() {
               <div className={styles.emptyState}>
                 <span>🔍</span>
                 <h3>No doctors found</h3>
-                <p>Try changing your search or specialty filter.</p>
+                <p>Try changing your search or filters.</p>
                 <button type="button" onClick={clearFilters}>
                   Clear filters
                 </button>
@@ -156,6 +331,13 @@ export default function DoctorsPage() {
         </div>
       </section>
     </main>
-    
+  );
+}
+
+export default function DoctorsPage() {
+  return (
+    <Suspense fallback={<main className={styles.page}>Loading doctors...</main>}>
+      <DoctorsContent />
+    </Suspense>
   );
 }

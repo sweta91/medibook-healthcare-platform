@@ -319,3 +319,269 @@
     margin-bottom: 4px;
   }
 }
+
+
+
+.filterGroup {
+  padding: 20px 0;
+  border-bottom: 1px solid #e5edf2;
+
+  h3 {
+    margin: 0 0 14px;
+    color: #123b5d;
+    font-size: 14px;
+    font-weight: 700;
+  }
+}
+
+.filterOption {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 13px;
+  color: #526477;
+  font-size: 13px;
+  cursor: pointer;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  input {
+    width: 16px;
+    height: 16px;
+    accent-color: #16a6a1;
+    cursor: pointer;
+  }
+}
+
+.feeInputs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    color: #718096;
+    font-size: 11px;
+  }
+
+  input {
+    width: 100%;
+    min-width: 0;
+    padding: 10px;
+    border: 1px solid #dce8ed;
+    border-radius: 8px;
+    outline: none;
+    color: #123b5d;
+    font: inherit;
+    font-size: 13px;
+
+    &:focus {
+      border-color: #16a6a1;
+    }
+  }
+}
+
+.filterSelect {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 10px;
+  border: 1px solid #dce8ed;
+  border-radius: 8px;
+  background: #fff;
+  color: #526477;
+  font-size: 13px;
+  outline: none;
+
+  &:focus {
+    border-color: #16a6a1;
+  }
+}
+
+.mobileFilterButton,
+.mobileApplyButton {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .toolbar {
+    flex-wrap: wrap;
+  }
+
+  .searchBox {
+    width: 100%;
+    flex: 1 1 100%;
+  }
+
+  .mobileFilterButton {
+    display: inline-flex;
+    min-height: 42px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 16px;
+    border: 1px solid #16a6a1;
+    border-radius: 8px;
+    background: #fff;
+    color: #078f8b;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .filters {
+    display: none;
+    width: 100%;
+  }
+
+  .filtersOpen {
+    display: block;
+  }
+
+  .mobileApplyButton {
+    display: block;
+    width: 100%;
+    min-height: 44px;
+    margin-top: 18px;
+    border: 0;
+    border-radius: 8px;
+    background: #16a6a1;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .sortBox {
+    flex: 1;
+  }
+}
+
+.filterGroup {
+  padding: 20px 0;
+  border-bottom: 1px solid #e5edf2;
+
+  h3 {
+    margin: 0 0 14px;
+    color: #123b5d;
+    font-size: 14px;
+    font-weight: 700;
+  }
+}
+
+.filterOption {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 13px;
+  color: #526477;
+  font-size: 13px;
+  cursor: pointer;
+
+  input {
+    width: 16px;
+    height: 16px;
+    accent-color: #16a6a1;
+  }
+}
+
+.feeInputs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    color: #718096;
+    font-size: 11px;
+  }
+
+  input {
+    width: 100%;
+    min-width: 0;
+    padding: 10px;
+    border: 1px solid #dce8ed;
+    border-radius: 8px;
+    color: #123b5d;
+    font-size: 13px;
+
+    &:focus {
+      outline: 1px solid #16a6a1;
+    }
+  }
+}
+
+.filterSelect {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 10px;
+  border: 1px solid #dce8ed;
+  border-radius: 8px;
+  background: #fff;
+  color: #526477;
+  font-size: 13px;
+}
+
+.mobileFilterButton,
+.mobileApplyButton {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .toolbar {
+    flex-wrap: wrap;
+  }
+
+  .searchBox {
+    width: 100%;
+    flex: 1 1 100%;
+  }
+
+  .mobileFilterButton {
+    display: inline-flex;
+    min-height: 42px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 16px;
+    border: 1px solid #16a6a1;
+    border-radius: 8px;
+    background: #fff;
+    color: #078f8b;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .filters {
+    display: none;
+    width: 100%;
+  }
+
+  .filtersOpen {
+    display: block;
+  }
+
+  .mobileApplyButton {
+    display: block;
+    width: 100%;
+    min-height: 44px;
+    margin-top: 18px;
+    border: 0;
+    border-radius: 8px;
+    background: #16a6a1;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+  }
+}

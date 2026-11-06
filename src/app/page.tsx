@@ -1,4 +1,5 @@
 import styles from "./page.module.scss";
+import Link from "next/link";
 
 import DoctorCard from "@/components/doctors/DoctorCard";
 import { doctors } from "@/data/doctors";
@@ -47,10 +48,22 @@ export default function Home() {
             professionals. Quality care is just a click away.
           </p>
 
-          <div className={styles.search}>
-            <input placeholder="Search doctors, specialties..." />
-            <button>Find a Doctor</button>
-          </div>
+          <form
+            className={styles.search}
+            action="/doctors"
+            method="GET"
+          >
+            <input
+              type="search"
+              name="search"
+              placeholder="Search doctors, specialties..."
+              aria-label="Search doctors by name, specialty or qualification"
+            />
+
+            <button type="submit">
+              Find a Doctor
+            </button>
+          </form>
 
           <div className={styles.trust}>
             <strong>500+</strong> Trusted Doctors
@@ -78,16 +91,20 @@ export default function Home() {
             <span className={styles.eyebrow}>OUR SPECIALTIES</span>
             <h2>Explore medical specialties</h2>
           </div>
-          <a href="#doctors">View all specialties →</a>
+          <Link href="/doctors">View all specialties →</Link>
         </div>
 
-        <div className={styles.specialtyGrid}>
+      <div className={styles.specialtyGrid}>
           {specialties.map((item) => (
-            <article className={styles.specialtyCard} key={item.name}>
+            <Link
+              href={`/doctors?search=${encodeURIComponent(item.name)}`}
+              className={styles.specialtyCard}
+              key={item.name}
+            >
               <div className={styles.specialtyIcon}>{item.icon}</div>
               <h3>{item.name}</h3>
               <p>{item.doctors}</p>
-            </article>
+            </Link>
           ))}
         </div>
       </section>
@@ -99,7 +116,7 @@ export default function Home() {
       <h2>Our featured doctors</h2>
     </div>
 
-    <a href="#doctors">View all doctors →</a>
+    <Link href="/doctors">View all doctors →</Link>
   </div>
 
   <div className={styles.doctorGrid}>
