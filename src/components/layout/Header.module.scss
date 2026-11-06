@@ -1,0 +1,175 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  background: #ffffff;
+  border-bottom: 1px solid #e5edf2;
+}
+
+.container {
+  position: relative;
+  display: flex;
+  width: min(1200px, calc(100% - 48px));
+  min-height: 76px;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
+.logo {
+  color: #123b5d;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  text-decoration: none;
+
+  span {
+    color: #16a6a1;
+  }
+}
+
+.desktopNav {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+}
+
+.navLink {
+  color: #526477;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #16a6a1;
+  }
+}
+
+.activeLink {
+  color: #16a6a1;
+  font-weight: 700;
+}
+
+.bookButton,
+.mobileBookButton {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  border-radius: 9px;
+  background: #16a6a1;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: #078f8b;
+  }
+}
+
+.menuButton {
+  display: none;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e5edf2;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #123b5d;
+  cursor: pointer;
+}
+
+.mobileNav {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: calc(100% - 36px);
+    min-height: 68px;
+  }
+
+  .logo {
+    font-size: 24px;
+  }
+
+  .desktopNav {
+    display: none;
+  }
+
+  .menuButton {
+    display: inline-flex;
+  }
+
+  .mobileNav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    display: flex;
+    width: 100%;
+    max-height: 0;
+    flex-direction: column;
+    gap: 0;
+    overflow: hidden;
+    padding: 0 20px;
+    background: #ffffff;
+    border-bottom: 1px solid transparent;
+    box-shadow: 0 12px 20px rgba(18, 59, 93, 0.08);
+    visibility: hidden;
+    opacity: 0;
+    transition:
+      max-height 0.3s ease,
+      padding 0.3s ease,
+      opacity 0.2s ease,
+      visibility 0.3s ease;
+  }
+
+  .mobileNavOpen {
+    max-height: 260px;
+    padding: 12px 20px 22px;
+    border-bottom-color: #e5edf2;
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .mobileNavLink {
+    padding: 14px 4px;
+    border-bottom: 1px solid #f0f3f6;
+    color: #526477;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .mobileBookButton {
+    width: 100%;
+    margin-top: 16px;
+  }
+}
+
+.loginLink {
+  color: #123b5d;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.signupButton {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  border-radius: 9px;
+  background: #16a6a1;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}

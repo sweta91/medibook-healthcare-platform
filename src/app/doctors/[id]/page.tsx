@@ -30,7 +30,7 @@ async function DoctorProfileContent({ params }: PageProps) {
 
   return (
     <main className={styles.page}>
-      <header className={styles.header}>
+      {/* <header className={styles.header}>
         <Link href="/" className={styles.logo}>
           Medi<span>Book.</span>
         </Link>
@@ -43,7 +43,7 @@ async function DoctorProfileContent({ params }: PageProps) {
         <Link href="/doctors" className={styles.backLink}>
           ← Back to doctors
         </Link>
-      </header>
+      </header> */}
 
       <div className={styles.container}>
         <div className={styles.breadcrumb}>

@@ -58,22 +58,7 @@ export default function DoctorsPage() {
 
   return (
     <main className={styles.page}>
-      <header className={styles.header}>
-        <Link href="/" className={styles.logo}>
-          Medi<span>Book.</span>
-        </Link>
-
-        <nav className={styles.navigation}>
-          <Link href="/">Home</Link>
-          <Link href="/doctors" className={styles.active}>
-            Find Doctors
-          </Link>
-        </nav>
-
-        <Link href="/" className={styles.homeLink}>
-          Back to Home
-        </Link>
-      </header>
+     {/* <header/> */}
 
       <section className={styles.hero}>
         <span className={styles.eyebrow}>FIND YOUR SPECIALIST</span>

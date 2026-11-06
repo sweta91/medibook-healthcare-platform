@@ -13,7 +13,7 @@ const specialties = [
 export default function Home() {
   return (
     <main className={styles.home}>
-      <header className={styles.header}>
+      {/* <header className={styles.header}>
         <a className={styles.logo} href="/">
           Medi<span>Book.</span>
         </a>
@@ -29,7 +29,7 @@ export default function Home() {
           <button className={styles.login}>Log In</button>
           <button className={styles.signup}>Sign Up</button>
         </div>
-      </header>
+      </header> */}
 
       <section className={styles.hero} id="home">
         <div className={styles.heroContent}>
